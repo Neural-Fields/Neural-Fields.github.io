@@ -1,1 +1,1 @@
-# Neural-Fields.github.io
+# workshop-CVPR-23
