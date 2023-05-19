@@ -1,1 +1,1 @@
-# workshop-CVPR-23
+# NeurIPS 2023 Workshop
