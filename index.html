@@ -1,1737 +1,517 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>MIPI Challenge 2023</title>
+<html lang="en"><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!--Open Graph Related Stuff-->
+   <title>Neural Fields in Principle</title>
+    <link rel="stylesheet" href="data/foundation.css">
+    <link rel="stylesheet" href="data/main.css">
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Silicon - Multipurpose Technology Bootstrap Template">
-    <meta name="keywords" content="bootstrap, business, creative agency, mobile app showcase, saas, fintech, finance, online courses, software, medical, conference landing, services, e-commerce, shopping cart, multipurpose, shop, ui kit, marketing, seo, landing, blog, portfolio, html5, css3, javascript, gallery, slider, touch, creative">
-    <meta name="author" content="Createx Studio">
+<style type="text/css">
+.schedule table {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
 
-    <!-- Viewport -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+.schedule tr:hover {
+    background-color: #D3D3D3;
+}
 
-    <!-- Favicon and Touch Icons -->
-    <link rel="shortcut icon" href="favicon.ico">
-    <meta name="msapplication-TileColor" content="#080032">
-    <meta name="msapplication-config" content="../assets/favicon/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
+.schedule img {
+    max-height: 95px;
+    max-width: 140px;
+    margin-right: 2px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border-radius: 50%;
+}
 
-    <!-- Vendor Styles -->
-    <link rel="stylesheet" media="screen" href="../assets/vendor/boxicons/css/boxicons.min.css"/>
-    <link rel="stylesheet" media="screen" href="../assets/vendor/swiper/swiper-bundle.min.css"/>
-    <link rel="stylesheet" media="screen" href="../assets/vendor/lightgallery/css/lightgallery-bundle.min.css"/>
+.abstract-content {
+    display: none;
+    padding: 5px;
+}
 
-    <!-- Main Theme Styles + Bootstrap -->
-    <link rel="stylesheet" media="screen" href="../assets/css/theme.min.css">
-
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <!-- Page loading styles -->
-    <style>
-      pre {
-        border: 1px solid #eff2fc;
-        display: none;
-        font-size: 12px;
-        margin: 5px 0;
-        max-width: 96%;
-        overflow: auto;
-        padding: 12px;
-        white-space: pre-wrap;
-        word-wrap: break-word;
-      }
-      .page-loading {
-        position: fixed;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        -webkit-transition: all .4s .2s ease-in-out;
-        transition: all .4s .2s ease-in-out;
-        background-color: #fff;
-        opacity: 0;
-        visibility: hidden;
-        z-index: 9999;
-      }
-      .dark-mode .page-loading {
-        background-color: #131022;
-      }
-      .page-loading.active {
-        opacity: 1;
-        visibility: visible;
-      }
-      .page-loading-inner {
-        position: absolute;
-        top: 50%;
-        left: 0;
-        width: 100%;
-        text-align: center;
-        -webkit-transform: translateY(-50%);
-        transform: translateY(-50%);
-        -webkit-transition: opacity .2s ease-in-out;
-        transition: opacity .2s ease-in-out;
-        opacity: 0;
-      }
-      .page-loading.active > .page-loading-inner {
-        opacity: 1;
-      }
-      .page-loading-inner > span {
-        display: block;
-        font-size: 1rem;
-        font-weight: normal;
-        color: #9397ad;
-      }
-      .dark-mode .page-loading-inner > span {
-        color: #fff;
-        opacity: .6;
-      }
-      .page-spinner {
-        display: inline-block;
-        width: 2.75rem;
-        height: 2.75rem;
-        margin-bottom: .75rem;
-        vertical-align: text-bottom;
-        border: .15em solid #b4b7c9;
-        border-right-color: transparent;
-        border-radius: 50%;
-        -webkit-animation: spinner .75s linear infinite;
-        animation: spinner .75s linear infinite;
-      }
-      .dark-mode .page-spinner {
-        border-color: rgba(255,255,255,.4);
-        border-right-color: transparent;
-      }
-      @-webkit-keyframes spinner {
-        100% {
-          -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
-      @keyframes spinner {
-        100% {
-          -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
-    </style>
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
-
-      #tracks ul {
-        line-height: 200%
-      }
-
-      #schedule th.time {
-        width: 200px
-      }
-
-      footer {
-        /*background-color: #131022;*/
-        background-image: url(../assets/img/backgrounds/footer-bg.jpg);
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-        position: relative;
-      }
-
-      footer::before {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        content: '';
-        background-color: rgba(31, 39, 73, .97);
-      }
-
-      @media only screen and (max-width: 767px) {
-        .swiper-slide-active {
-          padding: 40px;
-        }
-      }
-    </style>
-
-    <!-- Theme mode -->
-    <script>
-      let mode = window.localStorage.getItem('mode'),
-          root = document.getElementsByTagName('html')[0];
-      if (mode !== undefined && mode === 'dark') {
-        root.classList.add('dark-mode');
-      } else {
-        root.classList.remove('dark-mode');
-      }
-    </script>
-
-    <!-- Page loading scripts -->
-    <script>
-      (function () {
-        window.onload = function () {
-          const preloader = document.querySelector('.page-loading');
-          preloader.classList.remove('active');
-          setTimeout(function () {
-            preloader.remove();
-          }, 1000);
-        };
-      })();
-    </script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
-  </head>
+.disclaimer {
+    padding-left: 25px;
+    text-align: left;
+    font-size: 14px;
+    line-height: 16px;
+}
+.disclaimer b {
+    font-weight: bold !important;
+}
+</style></head>
 
 
-  <!-- Body -->
-  <body>
+<body class="off-canvas hide-extras" style="min-width:1300px; min-height:750px;">
+   <!-- <header>
+        <div class="row">
+            <a href="https://generative-vision.github.io/workshop-CVPR-23/">
+			<img style="height: 160px; position:absolute; top:280px; right:26px;" src="data/cvpr-2023-logo.jpeg" alt="logo"></a>
+            <h1><img style="height: 200px;" src="./static/eccv2022/img/cvinthewild_logo.jpg" alt="logo" /><br></h1> 
+            <br>
+        </div>
+    </header>-->
 
-    <!-- Page loading spinner -->
-    <div class="page-loading active">
-      <div class="page-loading-inner">
-        <div class="page-spinner"></div><span>Loading...</span>
-      </div>
+    <section role="main" style="padding: 1em;">
+        <div class="row">
+            <p style="font-size:50px; color:black; font-weight: 50" align="center">Neural Fields in Principle
+<!--                 <br> -->
+<!--                 <span style="font-size:30px; color:black; font-weight: 50" align="center">CVPR 2023, June 18th<br> </span> -->
+
+<!--                  <span style="font-size:20px; color:gray; font-weight: 30" align=center>9:00am-6:00pm Israeli Time  ||  11:00pm (October 22)-8:00am Pacific Time  ||  2:00pm-11:00pm Beijing Time</span>   -->             
+                <!-- <br> -->
+                <!-- <br> -->
+                <!-- <span style="font-size:20px; color:black; font-weight: 400" align=center>Zoom and Gatherly links on ECCV 2022 website: <a target="_blank" href="https://www.eventscribe.net/2021/2021CVPR/agenda.asp?startdate=6/19/2021&enddate=6/19/2021&BCFO=M&pfp=Workshops&mode=&tn=&cpftwo=&custwo=&pta=/">Link</a> <br> Navigate to: Workshops -> Sat, October 23 -> Search for "Computer Vision in the Wild" workshop entry</b></span> -->
+
+            </p>
+<!-- 
+	<div class="row">
+                <h1 style="font-size:30px; color:grey; font-weight: 200">Invited Speakers</h1>
+            </div>
+		
+	    <div style="text-align: center;">
+
+	    <div class="instructor2">
+		<a href="http://web.mit.edu/phillipi/">
+		    <div><img src="data/phillip.png"></div>
+		    <div>
+			<p style = "margin:4px">Phillip Isola</p>
+			<p style = "margin:4px">MIT</p>
+		    </div>
+		</a>
+	    </div>
+
+
+	    <div class="instructor2">
+		<a href="https://www2.eecs.berkeley.edu/Faculty/Homepages/kanazawa.html">
+		    <div><img src="data/angjoo.jpeg"></div>
+		    <div>
+			    <p style = "margin:4px">Angjoo Kanazawa</p>
+			    <p style = "margin:4px">UC Berkeley</p>
+		    </div>
+		</a>
+	    </div>
+
+
+	    <div class="instructor2">
+		<a href="https://people.eecs.berkeley.edu/~yima/">
+		    <div><img src="data/yi.jpeg"></div>
+		    <div>
+			    <p style = "margin:4px">Yi Ma</p>
+			    <p style = "margin:4px">UC Berkeley</p>
+		    </div>
+		</a>
+	    </div>			
+			
+	    <div class="instructor2">
+		<a href="https://stanford.edu/~gordonwz/">
+		    <div><img src="data/gordon.jpg"></div>
+		    <div>
+			    <p style = "margin:4px">Gordon Wetzstein</p>
+			    <p style = "margin:4px">Stanford University</p>
+		    </div>
+		</a>
+	    </div>
+
+	    <div class="instructor2">
+		<a href="http://shubhtuls.github.io/">
+		    <div><img src="data/shubham.jpg"></div>
+		    <div>
+			    <p style = "margin:4px">Shubham Tulsiani</p>
+			    <p style = "margin:4px">CMU</p>
+		    </div>
+		</a>
+	    </div> -->
+			
+			
+
+			
+			
+	
+<!-- 			<br>
+			<br> -->
+
+
+			
+<!-- 	    <div class="instructor2">
+		<a href="https://bmild.github.io/">
+		    <div><img src="data/ben.jpeg"></div>
+		    <div>
+			    <p style = "margin:4px">Ben Mildenhall</p>
+			    <p style = "margin:4px">Google Research</p>
+		    </div>
+		</a>
+	    </div>	
+			
+			
+
+	    <div class="instructor2">
+		<a href="https://www.3dunderstanding.org/">
+		    <div><img src="data/angela.jpeg"></div>
+		    <div>
+			    <p style = "margin:4px">Angela Dai</p>
+			    <p style = "margin:4px">TUM</p>
+		    </div>
+		</a>
+	    </div>
+
+			
+	    <div class="instructor2">
+		<a href="https://ommer-lab.com/people/ommer/">
+		    <div><img src="data/bjorn.jpeg"></div>
+		    <div>
+			    <p style = "margin:4px">Björn Ommer</p>
+			    <p style = "margin:4px">LMU</p>
+		    </div>
+		</a>
+	    </div>
+			
+			
+	    <div class="instructor2">
+		<a href="https://taiya.github.io/">
+		    <div><img src="data/andrea.png"></div>
+		    <div>
+			    <p style = "margin:4px">Andrea Tagliasacchi</p>
+			    <p style = "margin:4px">SFU</p>
+		    </div>
+		</a>
+	    </div>				
+			
+			
+	    <div class="instructor2">
+		<a href="https://www.cs.jhu.edu/~ayuille/">
+		    <div><img src="data/alan.jpeg"></div>
+		    <div>
+			    <p style = "margin:4px">Alan Yuille</p>
+			    <p style = "margin:4px">JHU</p>
+		    </div>
+		</a>
+	    </div>			 -->
+			
+			
+			
+			
+	    <div style="text-align: left;">
+			
+			
+			
+<div class="row">
+
+
+        <div class="row">
+            <h1 style="font-size:30px; color:grey; font-weight: 200">Overview</h1>
+            <div class="large-12 columns" style="text-align:left;">
+<!--                 <p style="font-size:15px; font-weight: 400; text-align:left">   -->
+	    	
+		<p style="font-size:15px; font-weight: 400; text-align:justify" align="justify">
+			As an expansion of physical fields into the realm of artificial intelligence, neural fields have shown intriguing success in neural rendering, 3D reconstruction, scene understanding, pose estimation, etc.
+			However, while existing works have focused on demonstrating the capabilities of neural fields, there has been less emphasis on understanding the fundamental principles that underlie the observed experimental phenomena. 
+			By drawing inspiration from physical fields where numerous fundamental principles has been rigorously derived and built, this workshop aims to foster discussions and uncover the essential principles and properties of 
+			neural fields that drive the observed experimental phenomena. This workshop invites researchers to delve into the foundational aspects and underlying mechanisms behind the success of neural fields, which could help 
+			to lay a sound foundation for the employment of neural fields in broad areas.
+                </p>
+				
+            </div>
+		
+		<div style="text-align: center;">
+		<img src="data/overview.png" width="1000">
+			
+		<br>
+		
+            <hr>
+        </div>
+		
+		
+		
+
+<!-- <div style="text-align: left;"> -->
+
+<div class="row">
+		<h1 style="font-size:30px; color:grey; font-weight: 200">Preliminary Schedule</h1>
+<div class="large-12 columns" style="text-align:left;">
+<table>
+<thead>
+<tr>
+<th>18th of June, Sunday, Time Zone UTC-7</th>
+<th> </th>
+<th> </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8:30</td>
+<td><strong>Opening</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>8:45</td>
+<td><strong>Invited talk #1</strong></td>
+<td></td>
+</tr>
+<tr>
+	<td>9:15</td>
+	<td><strong>Invited talk #2</strong></td>
+	<td></td>
+	</tr>
+<tr>
+<td>9:45</td>
+<td><strong>Invited talk #3</strong></td>
+<td></td>
+</tr>	  
+<tr>
+<td>10:15</td>
+<td><strong>Coffee Break</strong></td>
+</tr>
+<tr>
+<td>10:30</td>
+<td><strong>Invited talk #4</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>11:00</td>
+<td><strong>Invited talk #5</strong></td>
+<td></td>
+</tr>
+<tr>
+	<td>11:30</td>
+	<td><strong>Panel Discussion #1</strong></td>
+	<td>Invited Speakers #1 - #5</td>
+	</tr>
+<tr>
+<td>12:00</td>
+<td><strong>Lunch Break</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>12:45</td>
+<td><strong>Poster Session</strong></td>
+<td>39 papers will be presented</td>
+</tr>
+<tr>
+<td>13:45</td>
+<td><strong>Invited talk #6</strong></td>
+<td></td>
+</tr>
+<tr>
+	<td>14:15</td>
+	<td><strong>Invited talk #7</strong></td>
+	<td></td>
+	</tr>
+<tr>
+<td>14:45</td>
+<td><strong>Invited talk #8</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>15:15</td>
+<td><strong>Coffee Break</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>15:30</td>
+<td><strong>Invited talk #9</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>16:00</td>
+<td><strong>Invited talk #10</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>16:30</td>
+<td><strong>Panel Discussion #2</strong></td>
+<td>Invited Speakers #6 - #10</td>
+</tr>
+<tr>	
+<td>17:00</td>
+<td><strong>Closing Remarks</strong></td>
+<td> </td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<div class="row">
+                    <h1 style="font-size:30px; color:grey; font-weight: 200">Call for Papers</h1>
+	<div class="large-12 columns" style="text-align:left;">
+		    <ul style="font-size:15px;">
+<!-- 			    <b>Submission site:</b> <a href="https://cmt3.research.microsoft.com/GCV2023/">https://cmt3.research.microsoft.com/GCV2023/</a>. <br> -->
+<!-- 			    <b>Author kit:</b> <a href="https://media.icml.cc/Conferences/CVPR2023/cvpr2023-author_kit-v1_1-1.zip">CVPR Author KIT</a>. <br> -->
+			    We invite submissions of both <b>short and long papers</b> (4 pages and 8 pages respectively excluding references). <br> 
+			    The long papers will be included in the proceedings of NeurIPS. <br> 
+			    Potential topics include but are not limited to: <br>
+                    
+                        <li style="margin-left:30px">
+                            Advances in neural fields, including NeRF and neural rendering.
+                        </li>
+                        <li style="margin-left:30px">
+                            Encoding function and coordinate transformation in neural fields.
+                        </li>
+                        <li style="margin-left:30px">
+                            MLP-based neural fields versus Grid-based neural fields.
+                        </li>
+                        <li style="margin-left:30px">
+                            Smoothness and robustness of neural fields.
+                        </li>
+                        <li style="margin-left:30px">
+                            Generative models in neural fields.
+                        </li>
+                        <li style="margin-left:30px">
+                            Analysis-by-synthesis with neural fields.
+                        </li>
+                        <li style="margin-left:30px">
+                            Label transfer and correspondence learning in neural fields.
+                        </li>						
+                        <li style="margin-left:30px">
+                            Specific properties in 2D, 3D, 4D, etc., neural fields.
+                        </li>
+			<li style="margin-left:30px">
+                            Neural fields for science.
+                        </li>
+                        <li style="margin-left:30px">
+                            Ethical considerations in neural fields, dataset and model biases.
+                        </li>						
+                </ul>         
+	</div>
+		
+                    <div class="large-12 columns" style="text-align:left;">
+                        <div class="large-12 columns" style="text-align:left;">
+                            <p style="font-size:15px; font-weight: 200; border-style: solid;
+                                          border-width: 1px; text-align:justify; padding:5px; width:85%">
+                                <code>
+								 <!-- <span style="width:40%; margin:5px; display:inline-block;">TBA</span>-->
+								<span style="width:40%; margin:5px; display:inline-block;">Paper Submission Deadline</span>
+                                        <span style="display:inline-block; margin-left:10px;">11:59 PM, March 23 (Anywhere on Earth)</span><br>
+ 								<span style="width:40%; margin:5px; display:inline-block;">Decisions</span>
+                                        <span style="display:inline-block; margin-left:10px;">11:59 PM, April 3 (Anywhere on Earth)</span><br>
+        					<span style="width:40%; margin:5px; display:inline-block;">Camera-Ready</span>
+                                        <span style="display:inline-block; margin-left:10px;">11:59 PM, April 8 (Anywhere on Earth)</span><br>
+                                    </code></p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+	<div class="row">
+    <h1 style="font-size:30px; color:grey; font-weight: 200">Workshop Organizers</h1>
+<!--         <img src="data/organizers2.jpg" > -->
+
+	
+	
+<!-- <div class="row">
+  <div class="column">
+    <img src="data/adam.jpeg" alt="Snow" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="data/fangneng.png" alt="Forest" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="data/lingjie.jpeg" alt="Mountains" style="width:100%">
+  </div>
+</div> -->
+	
+
+<div style="text-align: center;">
+	
+	
+   
+    <div class="instructor">
+	<a href="https://fnzhan.com/">
+	    <div><img src="data/fangneng.jpeg"></div>
+	    <div>
+		    <p style = "margin:4px">Fangneng Zhan</p>
+		    <p style = "margin:4px">MPI-INF</p>
+	    </div>
+	</a>
+    </div>
+
+    <div class="instructor">
+	<a href="https://generativevision.mpi-inf.mpg.de/">
+	    <div><img src="data/adam.jpeg"></div>
+	    <div>
+		<p style = "margin:4px">Adam Kortylewski</p>
+		<p style = "margin:4px">MPI-INF</p>
+	    </div>
+	</a>
+    </div>
+	
+	
+    <div class="instructor">
+	<a href="https://apchenstu.github.io/">
+	    <div><img src="data/anpei.jpg"></div>
+	    <div>
+		    <p style = "margin:4px">Anpei Chen</p>
+		    <p style = "margin:4px">ETH Zürich</p>
+	    </div>
+	</a>
     </div>
 
 
-    <!-- Page wrapper for sticky footer -->
-    <!-- Wraps everything except footer to push footer to the bottom of the page if there is little content -->
-    <main class="page-wrapper">
-
-
-      <!-- Navbar -->
-      <!-- Remove "fixed-top" class to make navigation bar scrollable with the page -->
-      <header class="header navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top">
-        <div class="container px-3">
-          <a href="index.html" class="navbar-brand pe-3">
-            <img src="../assets/img/logo.png" width="47" alt="Logo">
-            MIPI
-          </a>
-          <div id="navbarNav" class="offcanvas offcanvas-end">
-            <div class="offcanvas-header border-bottom">
-              <h5 class="offcanvas-title">Menu</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a href="#tracks" class="nav-link">Tracks</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#submission" class="nav-link">Submission</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#dates" class="nav-link">Dates</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#schedule" class="nav-link">Schedule</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#speakers" class="nav-link">Speakers</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#awards" class="nav-link">Awards</a>
-                </li>
-                <li class="nav-item">
-                  <a href="#organizers" class="nav-link">Organizers</a>
-                </li>
-                <!-- <li class="nav-item">
-                  <a href="#sponsors" class="nav-link">Sponsors</a>
-                </li> -->
-                <li class="nav-item">
-                  <a href="#previous" class="nav-link">Previous MIPI</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <!-- <div class="form-check form-switch mode-switch pe-lg-1 ms-auto me-4" data-bs-toggle="mode">
-            <input type="checkbox" class="form-check-input" id="theme-mode">
-            <label class="form-check-label d-none d-sm-block" for="theme-mode">Light</label>
-            <label class="form-check-label d-none d-sm-block" for="theme-mode">Dark</label>
-          </div> -->
-          <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        </div>
-      </header>
-      
-
-      <!-- Hero slider + BG parallax -->
-      <section class="jarallax dark-mode bg-dark py-xxl-5" data-jarallax data-speed="0.4">
-        <span class="position-absolute top-0 start-0 w-100 h-100 bg-gradient-dark-translucent"></span>
-        <!-- Shangchen TODO: Replace images here -->
-        <div class="jarallax-img" style="background-image: url(../assets/img/backgrounds/head-bg-2023.jpg);"></div>
-        <div class="position-relative text-center zindex-5 overflow-hidden pt-4 py-md-5">
-
-          <!-- Slider controls (Prev / next) -->
-          <!-- <button type="button" id="hero-prev" class="btn btn-prev btn-icon btn-xl bg-transparent shadow-none position-absolute top-50 start-0 translate-middle-y d-none d-md-inline-flex ms-n3 ms-lg-2">
-            <i class="bx bx-chevron-left fs-1"></i>
-          </button>
-          <button type="button" id="hero-next" class="btn btn-next btn-icon btn-xl bg-transparent shadow-none position-absolute top-50 end-0 translate-middle-y d-none d-md-inline-flex me-n3 me-lg-2">
-            <i class="bx bx-chevron-right fs-1"></i>
-          </button> -->
-
-          <!-- Slider -->
-          <div class="container text-center py-xl-5">
-            <div class="row justify-content-center pt-lg-5">
-              <div class="col-xl-8 col-lg-9 col-md-10 col-11">
-                <div class="swiper pt-5 pb-4 py-md-5" data-swiper-options='{
-                  "effect": "fade",
-                  "speed": 500,
-                  "autoplay": {
-                    "delay": 5500,
-                    "disableOnInteraction": false
-                  },
-                  "pagination": {
-                    "el": ".swiper-pagination",
-                    "clickable": true
-                  },
-                  "navigation": {
-                    "prevEl": "#hero-prev",
-                    "nextEl": "#hero-next"
-                  }
-                }'>
-                  <div class="swiper-wrapper">
-                    <!-- Shangchen TODO: Replace text here -->
-                    <div class="swiper-slide">
-                      <h2 class="display-4 from-start mb-lg-1">Mobile Intelligent Photography & Imaging <br>
-                        Workshop 2023</h2>
-                      <div class="from-end">
-                        <p class="fs-4 text-light opacity-70 pb-2 mb-lg-5">MIPI Workshop in conjunction with <font color="#f029cf"><b>CVPR 2023</b></font> <br>
-                          <span style="font-size:1.3rem"> <i class="fa fa-calendar" style="color:#f029cf"></i> Sunday June 18th, 2023  &nbsp; &nbsp; &nbsp; 
-                            <i class="fa fa-map-marker" style="color:#f029cf"></i> Vancouver, Canada </span>
-                        </p>
-                      </div>
-                      <div class="scale-up delay-0">
-                        <a href="#tracks" class="btn btn-primary shadow-primary btn-lg">Start Challenge</a>
-                      </div>
-                    </div>
-                  <!-- Pagination (bullets) -->
-                  <!-- <div class="swiper-pagination position-relative d-md-none pt-2 mt-5"></div> -->
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <!-- tracks -->
-      <section id="tracks" class="container py-5">
-        <div class="row pt-4 pb-3">
-          <h2 class="text-center text-sm-start pb-2 pb-lg-0">Challenge Tracks</h2>
-        </div>
-        <div class="row">
-          <!-- Item -->
-          <h3>Overview</h3>
-          <div class="col">
-            <p>
-              Developing and integrating advanced image sensors with novel algorithms in camera systems is prevalent with the increasing demand for computational
-               photography and imaging on mobile platforms. However, the lack of high-quality data for research and the rare opportunity for in-depth exchange of
-                views from industry and academia constrain the development of mobile intelligent photography and imaging (MIPI).
-            </p>
-            <p>
-              The workshop's main focus is on MIPI, emphasizing the integration of novel image sensors and imaging algorithms. Together with the workshop, 
-              we organize a few exciting challenges and invite renowned researchers from both industry and academia to share their insights and recent work. 
-              Our challenge includes four tracks:
-            </p>
-            <ul>
-              <!-- <li>
-                <a href="https://codalab.lisn.upsaclay.fr/competitions/xxxx", class="badge bg-primary fs-sm">
-                  Automatic Black-box ISP Tuning
-                </a>
-                is to search for the optimal ISP parameters to convert input RAW Bayer images to target JPEG images.
-              </li> -->
-              <li>
-                <a href="https://codalab.lisn.upsaclay.fr/competitions/9402", class="badge bg-primary fs-sm", target="_blank">
-                  Nighttime Flare Removal
-                </a>
-                is to improve nighttime image quality by removing lens flare effects.
-              </li>
-              <li>
-                <a href="https://codalab.lisn.upsaclay.fr/competitions/9334", class="badge bg-primary fs-sm", target="_blank">
-                  RGB+ToF Depth Completion
-                </a>
-                uses sparse, noisy ToF depth measurements with RGB images to obtain a complete depth map.
-              </li>
-              <li>
-                <a href="https://codalab.lisn.upsaclay.fr/competitions/9343", class="badge bg-primary fs-sm", target="_blank">
-                    RGBW Sensor Re-mosaic
-                </a>
-                converts RGBW RAW data into Bayer format so that it can be processed with standard ISPs.
-              </li>
-              <li>
-                <a href="https://codalab.lisn.upsaclay.fr/competitions/9344", class="badge bg-primary fs-sm", target="_blank">
-                    RGBW Sensor Fusion
-                </a>
-                fuses Bayer data and a monochrome channel data into Bayer format to increase SNR and spatial resolution.
-              </li>
-            </ul>
-            <p>
-              Unlike previous workshops that focus on image or video manipulation, restoration and enhancement, or the efficient designs of AI models for mobile devices, 
-              the central theme of our workshop encompasses new sensors and imaging systems, which are the indispensable foundation for mobile intelligent photography 
-              and imaging. As the first workshop of this kind, MIPI aims to organize a dedicated workshop so that we can solicit relevant solutions and attract a focused 
-              group from both academia and industry for fruitful discussions.
-            </p>
-            <!-- <p><font color="#f029cf"><b>The competition site is under preparation, please stay tuned!</b></font></p> -->
-          </div>
-
-          <!-- Item -->
-          <h3>Datasets and Submission</h3>
-          <div class="col">
-            <p>
-              Datasets are available at the Codalab site of each challenge track. Submissions to all phases will be done through the CodaLab site. Please register to the site and refer to the instructions on how to download the datasets and submit your results. The evaluation metrics of each track will be introduced in the respective site.
-            </p>
-            <p>
-              Link to Codalab:
-              <!-- <a href="https://codalab.lisn.upsaclay.fr/competitions/xxxx", class="badge bg-light shadow-primary fs-sm">
-                <b>Automatic Black-box ISP Tuning</b>
-              </a> -- -->
-              <a href="https://codalab.lisn.upsaclay.fr/competitions/9402", class="badge bg-light shadow-primary fs-sm", target="_blank">
-                <b>Nighttime Flare Removal</b>
-              </a> --
-              <a href="https://codalab.lisn.upsaclay.fr/competitions/9334", class="badge bg-light shadow-primary fs-sm", target="_blank">
-                <b>RGB+ToF Depth Completion</b>
-              </a>--
-              <a href="https://codalab.lisn.upsaclay.fr/competitions/9343", class="badge bg-light shadow-primary fs-sm", target="_blank">
-                <b>RGBW Sensor Re-mosaic</b>
-              </a> --
-              <a href="https://codalab.lisn.upsaclay.fr/competitions/9344", class="badge bg-light shadow-primary fs-sm", target="_blank">
-                <b>RGBW Sensor Fusion</b>
-              </a> 
-            </p>
-          </div>
-
-          <!-- Item -->
-          <h3>Awards</h3>
-          <div class="col">
-            <p>
-              The winner teams of each track will receive a certificate. Challenge participants with the most successful and innovative methods will be invited 
-              to present at the MIPI workshop. 
-            </p>
-          </div>
-
-          <!-- Item -->
-          <h3>Terms and Conditions</h3>
-          <div class="col">
-            <p>Link to <a href="../terms.html">Terms and Conditions</a>.</p>
-            <p>
-              In the event of any inconsistency between the terms and details of this website and Codalab competition sites, the details on the Codalab sites shall prevail.
-            </p>
-          </div>       
-
-          <!-- Item -->
-          <h3>Contact</h3>
-          <div class="col">
-            <p>
-              For more information, please contact us at
-              <a href="mailto:mipi.challenge@gmail.com">mipi.challenge@gmail.com</a>.
-            </p>
-          </div>       
-
-        </div>
-      </section>
-
-      <!-- Submission -->
-      <section id="submission" class="bg-secondary py-5">
-        <div class="container">
-          <div class="row pt-4 pb-3">
-            <h2 class="text-center text-sm-start pb-2 pb-lg-0">Call for Papers</h2>
-          </div>
-          <div class="row pt-4 pb-3">
-            <h4 class="text-center text-sm-start pb-2 pb-lg-0">CVPR 2023 Workshop:</h4>
-          </div>
-          <div class="row">
-            <div class="col">
-                <p>
-                  Coupled with the workshop, besides the challenge, we also provide a fertile ground for researchers, scientists, 
-                  and engineers from around the world to disseminate their research outcomes and push forward the frontiers of 
-                  knowledge within novel image sensors and imaging systems-related areas.
-                  The MIPI workshop topics cover but are not limited to:
-                </p>
-                <ul>
-                    <strong>
-                    <li>Learnable ISPs</li>
-                    <li>ToF depth completion</li>
-                    <li>RGBW sensor re-mosaic and fusion</li>
-                    <li>Nighttime image restoration</li>
-                    <li>Under-display camera image restoration</li>
-                    <li>Event camera for image/video restoration</li>
-                    <li>Learning-based computational imaging systems:  efficient algorithms, smart imaging systems, learned data acquisition, task-driven ISPs, etc</li>
-                    </strong>
-                </ul>
-                <p>
-                  Papers will be peer-reviewed and comply with the CVPR 2023 proceedings style, format and length. 
-                  The deadline for camera ready submission is the same as the main conference. 
-                  Papers accepted must be registered and presented to ensure their inclusion in the IEEE Xplore Library. 
-                  Selected papers will be invited to present in the workshop. Some papers will also be invited to contribute to
-                   a book chapter or a special issue article in our future publication.
-                  The format for submission is the same as the
-                    <a href="https://cvpr2023.thecvf.com/Conferences/2023/CallForPapers">
-                        CVPR 2023 requirements
-                    </a>. 
-                </p>
-                <p>
-                    Paper submission and review site:
-                    <a href="https://cmt3.research.microsoft.com/MIPI2023/Submission/Index", class="badge bg-success shadow-success fs-sm", target="_blank">
-                        <strong>Submission Site</strong>
-                    </a>
-                </p>
-                <br>
-                <!-- <p>
-                  <b>Certificates for Best Paper Award and Best Paper Honorable Mention:</b><br><br>
-                  <p> 
-                    <a href="./Best_Paper_Award.pdf", class="badge bg-primary fs-sm", target="_blank">
-                    <strong>Best Paper Award:</strong>
-                    </a><br>
-                    <b>Paper title:</b> Event-based Image Deblurring with Dynamic Motion Awareness<br>
-                    <b>Authors:</b> Patricia Vitoria, Stamatios Georgoulis, Stepan Tulyakov, Alfredo Bochicchio,  Julius Erbach,  Yuanyou Li<br>
-                    <b>Affiliation:</b> Huawei
-                  </p>
-                  <p> 
-                    <a href="./Best_Paper_Honorable_Mention.pdf", class="badge bg-primary fs-sm", target="_blank">
-                      <strong>Best Paper Honorable Mention:</strong>
-                    </a><br>
-                    <b>Paper title:</b> Continuous Spectral Reconstruction from RGB Images via Implicit Neural Representation<br>
-                    <b>Authors:</b> Ruikang Xu, Mingde Yao, Chang Chen, Lizhi Wang, Zhiwei Xiong<br>
-                    <b>Affiliations:</b> University of Science and Technology of China, Huawei Noah's Ark Lab, Beijing Institute of Technology
-                  </p>
-                </p> -->
-              </div>
-        </div>
-
-        <div class="row pt-4 pb-3">
-          <h4 class="text-center text-sm-start pb-2 pb-lg-0">IJCV Special Issue on MIPI:</h4>
-        </div>
-        <div class="row">
-          <div class="col">
-        <p>
-          Selected extended workshop papers will also be invited to contribute to  a special issue article in IJCV.
-        </p>
-        <p>
-          Webpage of IJCV special issue:
-          <a href="../MIPI_IJCV/index.html", class="badge bg-success shadow-success fs-sm", target="_blank">
-              <strong>Webpage</strong>
-          </a>
-        </p>
-        <p>
-          Paper submission site of IJCV special issue:
-          <a href="https://www.springer.com/journal/11263/updates/23967724/", class="badge bg-success shadow-success fs-sm", target="_blank">
-              <strong>Submission Site</strong>
-          </a>
-        </p>
-        </div>
-        </div>
-        </div>
-      </section>
-
-      <!-- Important Dates -->
-      <section id="dates" class="container py-5">
-        <div class="row pt-4 pb-3">
-          <div class="col-12">
-            <h2 class="text-center text-sm-start pb-2 pb-lg-0 mb-4 mb-lg-5">Important Dates</h2>
-          </div>
-          <div class="col-lg-2 mb-3">
-            <!-- Nav tabs -->
-            <div class="nav flex-nowrap flex-lg-column nav-tabs" role="tablist" aria-orientation="vertical">
-              <a href="#challenge" class="nav-link d-block w-100 rounded-3 p-4 me-2 me-sm-3 me-lg-0 mb-lg-3 active" id="challenge-tab" data-bs-toggle="tab" role="tab" aria-controls="challenge" aria-selected="true">
-                <div class="fs-3 fw-bold">Challenge</div>
-              </a>
-              <a href="#workshop" class="nav-link d-block w-100 rounded-3 p-4" id="workshop-tab" data-bs-toggle="tab" role="tab" aria-controls="workshop" aria-selected="false">
-                <!-- <div class="fs-xl">Day Two</div> -->
-                <div class="fs-3 fw-bold">Workshop</div>
-              </a>
-            </div>
-          </div>
-          <div class="col-lg-9 offset-lg-1">
-            <!-- Tab panes -->
-            <div class="tab-content">
-              <!-- Challenge -->
-              <div class="tab-pane fade show active" id="challenge" role="tabpanel" aria-labelledby="challenge-tab">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th class="event">Event</th>
-                        <th class="date">Date (Always 11:59 PM Pacific Time)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Site online</th>
-                        <td>Dec 20, 2022</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Release of training data and validation data</th>
-                        <td>Dec 25, 2022</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Validation server online</th>
-                        <td>Jan 01, 2023</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Release of test data, test server online</th>
-                        <td>Feb 15, 2023</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Test results submission deadline, test server closed</th>
-                        <td>Feb 20, 2023</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Fact sheets submission deadline</th>
-                        <td>Feb 20, 2023</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Final test and rating results release to participants</th>
-                        <td>Feb 22, 2023</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <!-- Workshop -->
-              <div class="tab-pane fade" id="workshop" role="tabpanel" aria-labelledby="workshop-tab">
-                <div class="table-responsive">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th class="event">Event</th>
-                        <th class="date">Date (Always 11:59 PM Pacific Time)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">Site online</th>
-                        <td>Dec 20, 2022</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">CMT online</th>
-                        <td>Dec 20, 2022</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Paper submission deadline</th>
-                        <td><s>Feb 12, 2023</s> &nbsp; March 10, 2023</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Supplementary materials deadline</th>
-                        <td><s>Feb 12, 2023</s> &nbsp; March 10, 2023</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Notification to authors</th>
-                        <td><s>Feb 27, 2023</s> &nbsp; March 20, 2023</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Camera ready deadline</th>
-                        <td>Apr 08, 2023</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Workshop date</th>
-                        <td>Jun 18, 2023</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Schedule -->
-      <section id="schedule" class="bg-secondary py-5">
-        <div class="container">
-          <div class="row pt-4 pb-3">
-            <h2 class="text-center text-sm-start pb-2 pb-lg-0">Schedule</h2>
-          </div>
-          <p>--TBD--</p>
-
-           <!-- <div class="table-responsive">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th class="time"><h4>Time (Israel)</h4></th>
-                  <th class="programme"><h4>Programme (<a href="https://youtu.be/2SijuyeC05w" target="_blank">Video Recording</a>)</h4></th>
-                </tr>
-              </thead>
-              <tbody>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">9:00 – 9:10</div>
-                  </th>                        
-                  <td><h5>Opening and Welcome</h5></td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">9:10 – 10:00</div>
-                    <span class="badge bg-primary shadow-secondary fs-sm">Keynote Speaker</span>
-                  </th>
-                  <td>
-                    <h5>Keynote: Denoising as a Building Block for Imaging, Inverse Problems, and Machine Learning</h5>
-                    <ul class="list-inline">
-                      <li class="list-inline-item">
-                        <a href="javascript:void(0)" class="abstract"><b>[Abstract]</b></a>
-                      </li>
-                      <pre>Denoising is one of the oldest problems in imaging. In the last decade, the quality of denoising algorithms has reached phenomenal levels – almost as good as we can ever hope. There are thousands of papers on this topic, and their scope is vast and approaches so diverse that putting them in some order (as I will do) is both useful and challenging. I will describe what we can say about this general class of operators, and what makes them so special. I will argue that denoising is more important than ever; not simply as a process for removing noise, but especially now as a core engine and building block for much more complex tasks in imaging, inverse problems, and machine learning.</pre>
-                    </ul>
-
-                    <div class="row row-cols-1 row-cols-md-2 g-3">
-                      <div class="col">
-                        <div class="d-flex align-items-center">
-                          <img src="../assets/img/speaker/peyman_milanfar.jpg" class="rounded-circle" width="48" alt="Jerome Bell">
-                          <div class="ps-3">
-                            <h6 class="fw-semibold mb-1">Peyman Milanfar</h6>
-                            <p class="fs-sm text-muted mb-0">Principal Scientist/Director, Google Research</p>
-                          </div>
-                        </div>
-                      </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">10:00 – 10:15</div>
-                    <span class="badge bg-success shadow-secondary fs-sm">Best Paper Award</span>
-                  </th>                        
-                  <td>
-                    <h5>Best Paper Award</h5>
-                    <p class="mb-4">
-                    <b>Winner Paper:</b> Event-based Image Deblurring with Dynamic Motion Awareness
-                    </p>
-                    <h6 class="fw-semibold mb-1">Presenter: Patricia Vitoria (Huawei Zurich Research Center)</h6>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">10:15 – 10:30</div>
-                    <span class="badge bg-success shadow-secondary fs-sm">Best Paper Mention</span>
-                  </th>                        
-                  <td>
-                    <h5>Best Paper Honorable Mention</h5>
-                    <p class="mb-4">
-                      <b>Winner Paper:</b> Continuous Spectral Reconstruction from RGB Images via Implicit Neural Representation
-                    </p>
-                    <h6 class="fw-semibold mb-1">Presenter: Ruikang Xu (University of Science and Technology of China)</h6>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">10:30 - 10:50</div>
-                    <span class="badge bg-info shadow-secondary fs-sm">Invited Speaker</span>
-                  </th>                        
-                  <td>
-                    <h5>Invited Talk: Combining Internal and External Constraints for Unrolling Shutter in Videos</h5>
-                    <h6 class="fw-semibold mb-1">Presenter: Eyal Naor (The Weizmann Institute of Science)</h6>
-                  </td>
-                </tr>
-
-                <th scope="row">
-                  <div class="h5 mb-1">10:50 - 11:10</div>
-                  <span class="badge bg-info shadow-secondary fs-sm">Invited Speaker</span>
-                </th>                        
-                <td>
-                  <h5>Invited Talk: Synthesizing Light Field Video from Monocular Video</h5>
-                  <h6 class="fw-semibold mb-1">Presenter: Shrisudhan Govindarajan (Indian Institute of Technology Madras)</h6>
-                </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">11:10 - 11:20</div>
-                  </th>                        
-                  <td><h5>&#9749; Tea Break</h5></td>                  
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">11:20 - 11:35</div>
-                    <span class="badge bg-danger shadow-secondary fs-sm">Winning Solution</span>
-                  </th>                        
-                  <td>
-                    <h5>Challenge Winner: ToF Depth Completion Track</h5>
-                    <h6 class="fw-semibold mb-1">Presenter: Dewang Hou (Peking University)</h6>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">11:35-11:50</div>
-                    <span class="badge bg-danger shadow-secondary fs-sm">Winning Solution</span>
-                  </th>                        
-                  <td>
-                    <h5>Challenge Winner: Quad-Bayer Remosaic & RGBW Sensor Remosaic Tracks</h5>
-                    <h6 class="fw-semibold mb-1">Presenter: Lingchen Sun (OPPO Research Institute)</h6>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">11:50 - 12:10</div>
-                    <span class="badge bg-info shadow-secondary fs-sm">Invited Speaker</span>
-                  </th>                        
-                  <td>
-                    <h5>Invited Talk: Animation from Motion Blur or Rolling Shutter Distortion</h5>
-                    <h6 class="fw-semibold mb-1">Presenter: Zhihang Zhong (The University of Tokyo)</h6>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">12:10 - 12:30</div>
-                    <span class="badge bg-info shadow-secondary fs-sm">Invited Speaker</span>
-                  </th>                        
-                  <td>
-                    <h5>Invited Talk: Event-Based Fusion for Motion Deblurring with Cross-Modal Attention</h5>
-                    <h6 class="fw-semibold mb-1">Presenter: Lei Sun (ETH Zurich)</h6>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">12:30 - 13:50</div>
-                  </th>                        
-                  <td><h5>&#127857; Break</h5></td>                  
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">13:50 - 14:05</div>
-                    <span class="badge bg-danger shadow-secondary fs-sm">Winning Solution</span>
-                  </th>                        
-                  <td>
-                    <h5>Challenge Winner: RGBW Sensor Fusion Track</h5>
-                    <h6 class="fw-semibold mb-1">Presenter: DongJae Lee (Korea Advanced Institute of Science and Technology)</h6>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">14:05 - 14:20</div>
-                    <span class="badge bg-danger shadow-secondary fs-sm">Winning Solution</span>
-                  </th>                        
-                  <td>
-                    <h5>Challenge Runner-up: RGBW Sensor Remosaic Track</h5>
-                    <h6 class="fw-semibold mb-1">Presenter: Qiaosi Yi (East China Normal University)</h6>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">14:20 - 14:35</div>
-                    <span class="badge bg-danger shadow-secondary fs-sm">Winning Solution</span>
-                  </th>                        
-                  <td>
-                    <h5>Challenge Winner: UDC Image Restoration Track</h5>
-                    <h6 class="fw-semibold mb-1">Presenter: Yurui Zhu (University of Science and Technology of China)</h6>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">14:35 - 15:25</div>
-                    <span class="badge bg-primary shadow-secondary fs-sm">Keynote Speaker</span>
-                  </th>
-                  <td>
-                    <h5>Keynote: Recent Evolution on Image Sensing</h5>
-                    <ul class="list-inline">
-                      <li class="list-inline-item">
-                        <a href="javascript:void(0)" class="abstract"><b>[Abstract]</b></a>
-                      </li>
-                      <pre>The current growth of the image sensor market is mainly driven by demands for the mobile imaging market. The driving force is further expected to continue more than several years from now. Thus, it is worthy to consider what kinds of demands come from the mobile imaging market to understand what kinds of imaging technologies are required.
-
-On the other hand, sensing applications, which utilize image sensor date not only for taking pictures but also for person identification, product inspection, obstacle avoidance and so on, are emerging. They seem to growth in industry and automotive markets at first but expected in mobile market soon. In sensing applications, non-RGB image sensors are utilized as well as RGB image sensors.
-
-In this talk, recent evolutions of image sensors for both RGB and other than RGB are introduced. First, RGB imaging technologies which have been implemented in recent image sensor products for mobile market are introduced. Second, some new-generation image sensors which are to acquire information other than RGB are introduced. Also, expectations that such new-generation image sensors are promising for mobile imaging applications in the future are explained by introducing some recent researches in vision-based imaging area.</pre>
-                    </ul>
-                    <div class="row row-cols-1 row-cols-md-2 g-3">
-                      <div class="col">
-                        <div class="d-flex align-items-center">
-                          <img src="../assets/img/speaker/tomoo_mitsunaga.jpg" class="rounded-circle" width="48" alt="Jerome Bell">
-                          <div class="ps-3">
-                            <h6 class="fw-semibold mb-1">Tomoo Mitsunaga</h6>
-                            <p class="fs-sm text-muted mb-0">Manager, Sony Europe B.V.</p>
-                          </div>
-                        </div>
-                      </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">15:25 - 16:15</div>
-                    <span class="badge bg-primary shadow-secondary fs-sm">Keynote Speaker</span>
-                  </th>
-                  <td>
-                    <h5>Keynote: Robust Imaging Color and the Dual-Purpose ISP</h5>
-                    <ul class="list-inline">
-                      <li class="list-inline-item">
-                        <a href="javascript:void(0)" class="abstract"><b>[Abstract]</b></a>
-                      </li>
-                      <pre>In this talk, I will discuss recent work targeting imaging strategies to allow robust color imaging. In particular, I will overview capture-time algorithms that allows processed images to be unprocessed to correct potential errors that affect image color. I will also discuss the idea of a "dual-purpose" image signal processor (ISP) that is suitable for both photographic and scientific tasks.</pre>
-                    </ul>
-                    <div class="row row-cols-1 row-cols-md-2 g-3">
-                      <div class="col">
-                        <div class="d-flex align-items-center">
-                          <img src="../assets/img/speaker/michael_brown.jpg" class="rounded-circle" width="48" alt="Jerome Bell">
-                          <div class="ps-3">
-                            <h6 class="fw-semibold mb-1">Michael S. Brown</h6>
-                            <p class="fs-sm text-muted mb-0">Professor, York University</p>
-                          </div>
-                        </div>
-                      </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">16:15 - 17:05</div>
-                    <span class="badge bg-primary shadow-secondary fs-sm">Keynote Speaker</span>
-                  </th>
-                  <td>
-                    <h5>Keynote: Computer Vision, One Photon at a Time</h5>
-                    <ul class="list-inline">
-                      <li class="list-inline-item">
-                        <a href="javascript:void(0)" class="abstract"><b>[Abstract]</b></a>
-                      </li>
-                      <pre>Single-photon avalanche diodes (SPADs) are an emerging sensor technology that promises single-photon sensitivity and the ability to time-tag photons with picosecond precision. In the last few years, we have witnessed a single-photon revolution, resulting for the first time in multi-megapixel SPAD arrays, which allow capturing sufficient spatial details needed for mainstream computer vision applications, including object detection and tracking, text recognition, pose recognition, and SLAM. This raises the following questions: Are SPADs ready to be used beyond niche scientific applications, as general-purpose computer vision sensors? Can they be deployed outside the lab in-the-wild? If so, what are their benefits over conventional cameras?</pre>
-                    </ul>
-                    <div class="row row-cols-1 row-cols-md-2 g-3">
-                      <div class="col">
-                        <div class="d-flex align-items-center">
-                          <img src="../assets/img/speaker/mohit_gupta.jpg" class="rounded-circle" width="48" alt="Jerome Bell">
-                          <div class="ps-3">
-                            <h6 class="fw-semibold mb-1">Mohit Gupta</h6>
-                            <p class="fs-sm text-muted mb-0">Associate Professor, University of Wisconsin-Madison</p>
-                          </div>
-                        </div>
-                      </div>
-                  </td>
-                </tr>
-
-                <tr>
-                  <th scope="row">
-                    <div class="h5 mb-1">17:05 - 17:20</div>
-                  </th>                        
-                  <td><h5>Closing</h5></td>
-                </tr>
-
-              </tbody>
-            </table>
-          </div> -->
-
-        </div>
-      </section>
-
-      <!-- Speakers -->
-      <section id="speakers" class="container py-5">
-        <div class="row pt-4 pb-3">
-          <h2 class="text-center text-sm-start pb-2 pb-lg-0">Keynote Speakers</h2>
-        </div>
-        <div class="row">
-            <!-- Item -->
-            <!-- <div class="col-md-3 py-3">
-              <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                <img src="../assets/img/speaker/michael_brown.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                <h5 class="fw-medium fs-lg mb-1">Michael S. Brown</h5>
-                <p class="fs-sm mb-3">Professor/Director<br>York University/Samsung AI Center</p>
-                <div class="d-flex justify-content-center">
-                  <a href="https://www.eecs.yorku.ca/~mbrown/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                    <i class="bx bx-home"></i>
-                  </a>
-                  <a href="https://scholar.google.com/citations?hl=en&user=Gv1QGSMAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bxl-google"></i>
-                  </a>
-                  <a href="mailto:mbrown@eecs.yorku.ca" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bx-envelope"></i>
-                  </a>
-                </div>
-              </div>
-            </div> -->
-
-            <!-- Item -->
-            <!-- <div class="col-md-3 py-3">
-              <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                <img src="../assets/img/speaker/mohit_gupta.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                <h5 class="fw-medium fs-lg mb-1">Mohit Gupta</h5>
-                <p class="fs-sm mb-3">Associate Professor<br>University of Wisconsin-Madison</p>
-                <div class="d-flex justify-content-center">
-                  <a href="https://wisionlab.cs.wisc.edu/people/mohit-gupta/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                    <i class="bx bx-home"></i>
-                  </a>
-                  <a href="https://scholar.google.com/citations?hl=en&user=Y3wdd8oAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bxl-google"></i>
-                  </a>
-                  <a href="mailto:mohitg@cs.wisc.edu" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bx-envelope"></i>
-                  </a>
-                </div>
-              </div>
-            </div> -->
-
-            <!-- Item -->
-            <!-- <div class="col-md-3 py-3">
-              <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                <img src="../assets/img/speaker/peyman_milanfar.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                <h5 class="fw-medium fs-lg mb-1">Peyman Milanfar</h5>
-                <p class="fs-sm mb-3">Principal Scientist/Director<br>Google Research</p>
-                <div class="d-flex justify-content-center">
-                  <a href="https://sites.google.com/view/milanfarhome/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                    <i class="bx bx-home"></i>
-                  </a>
-                  <a href="https://scholar.google.com/citations?hl=en&user=iGzDl8IAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bxl-google"></i>
-                  </a>
-                  <a href="#" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bx-envelope"></i>
-                  </a>
-                </div>
-              </div>
-            </div>   -->
-
-            <!-- Item -->
-            <!-- <div class="col-md-3 py-3">
-              <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                <img src="../assets/img/speaker/tomoo_mitsunaga.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                <h5 class="fw-medium fs-lg mb-1">Tomoo Mitsunaga</h5>
-                <p class="fs-sm mb-3">Manager<br>Sony Europe B.V.</p>
-                <div class="d-flex justify-content-center">
-                  <a href="#" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                    <i class="bx bx-home"></i>
-                  </a>
-                  <a href="#" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bxl-google"></i>
-                  </a>
-                  <a href="mailto:Tomoo.Mitsunaga@sony.com" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bx-envelope"></i>
-                  </a>
-                </div>
-              </div>
-            </div> -->
-
-            <!-- Item -->
-            <div class="col-md-3 py-3">
-              <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                <img src="../assets/img/speaker/felix_heide.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                <h5 class="fw-medium fs-lg mb-1">Felix Heide</h5>
-                <p class="fs-sm mb-3">Professor<br>Princeton University </p>
-                <div class="d-flex justify-content-center">
-                  <a href="https://www.cs.princeton.edu/~fheide/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                    <i class="bx bx-home"></i>
-                  </a>
-                  <a href="https://scholar.google.com/citations?hl=en&user=gRqzSHsAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bxl-google"></i>
-                  </a>
-                  <a href="mailto:fheide@cs.princeton.edu" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bx-envelope"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Item -->
-            <div class="col-md-3 py-3">
-              <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                <img src="../assets/img/speaker/jiaying_liu.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                <h5 class="fw-medium fs-lg mb-1">Jiaying Liu</h5>
-                <p class="fs-sm mb-3">Associate Professor<br>Peking University </p>
-                <div class="d-flex justify-content-center">
-                  <a href="http://39.96.165.147/people/liujiaying.html" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                    <i class="bx bx-home"></i>
-                  </a>
-                  <a href="https://scholar.google.com/citations?hl=en&user=-OcSne0AAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bxl-google"></i>
-                  </a>
-                  <a href="mailto:liujiaying@pku.edu.cn" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bx-envelope"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Item -->
-            <div class="col-md-3 py-3">
-              <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                <img src="../assets/img/speaker/orazio_gallo.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                <h5 class="fw-medium fs-lg mb-1">Orazio Gallo</h5>
-                <p class="fs-sm mb-3">Principal Research Scientist<br>NVIDIA </p>
-                <div class="d-flex justify-content-center">
-                  <a href="https://oraziogallo.github.io/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                    <i class="bx bx-home"></i>
-                  </a>
-                  <a href="https://scholar.google.com/citations?hl=en&user=6UHjQQYAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bxl-google"></i>
-                  </a>
-                  <a href="mailto:oraziogallo@soe.ucsc.edu" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bx-envelope"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Item -->
-            <div class="col-md-3 py-3">
-              <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                <img src="../assets/img/speaker/sabine_susstrunk.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                <h5 class="fw-medium fs-lg mb-1">Sabine Süsstrunk</h5>
-                <p class="fs-sm mb-3">Professor<br>EPFL </p>
-                <div class="d-flex justify-content-center">
-                  <a href="https://people.epfl.ch/sabine.susstrunk?lang=en/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                    <i class="bx bx-home"></i>
-                  </a>
-                  <a href="https://scholar.google.com/citations?hl=en&user=EX3OYP4AAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bxl-google"></i>
-                  </a>
-                  <a href="mailto:sabine.susstrunk@epfl.ch" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                    <i class="bx bx-envelope"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      
-<!-- Awards -->
-    <section id="awards" class="bg-secondary py-5">
-      <div class="container">
-        <div class="row pt-4 pb-3">
-          <!-- <h2 class="text-center text-sm-start pb-2 pb-lg-0">Awards (<a href="./award_certificates_2023.pdf" target="_blank">Certificates</a>) -->
-          <h2 class="text-center text-sm-start pb-2 pb-lg-0">Awards
-          </h2>
-        </div>
-      </div>
-      <div class="container">
-          <div class="row">
-              <div class="col text-light">
-                <ul class="nav nav-tabs" role="tablist">
-                  <li class="nav-item">
-                    <a href="#night-flare-removal" id="night-flare-removal-tab" 
-                        class="btn btn-primary-award shadow-primary btn-lg active"
-                        data-bs-toggle="tab" role="tab" aria-controls="night-flare-removal" aria-selected="true">
-                        Nighttime Flare Removal
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#rgb-depth-fusion" id="rgb-depth-fusion-tab" 
-                        class="btn btn-primary-award shadow-primary btn-lg"
-                        data-bs-toggle="tab" role="tab" aria-controls="rgb-depth-fusion" aria-selected="false">
-                        RGB+ToF Depth Completion
-                    </a>
-                  </li> 
-                  <li class="nav-item">
-                    <a href="#rgbw-sensor-re-mosaic" id="rgbw-sensor-re-mosaic-tab" 
-                        class="btn btn-primary-award shadow-primary btn-lg"
-                        data-bs-toggle="tab" role="tab" aria-controls="rgbw-sensor-re-mosaic" aria-selected="false">
-                        RGBW Sensor Re-mosaic
-                      </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#rgbw-sensor-fusion" id="rgbw-sensor-fusion-tab" 
-                        class="btn btn-primary-award shadow-primary btn-lg"
-                        data-bs-toggle="tab" role="tab" aria-controls="rgbw-sensor-fusion" aria-selected="false">
-                        RGBW Sensor Fusion
-                      </a>
-                  </li>
-                </ul>
-                <div class="tab-content">
-                  <!-- RGB+ToF Depth Completion -->
-                  <div class="tab-pane fade show active" id="night-flare-removal" role="tabpanel" aria-labelledby="rgb-depth-fusion-tab">
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                              <th scope="col">Rank</th>
-                              <th scope="col">Team Name</th>
-                              <th scope="col">Affiliation</th>
-                              <th scope="col">Team Members</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">1st</th>
-                            <td>MiAlgo</td>
-                            <td>Xiaomi Inc., China
-                            </td>
-                            <td>Shuai Liu, Hao Wang, Chaoyu Feng, Luyang Wang,<br>
-                              Guangqi Shao, Chenguang Zhang, Xiaotao Wang, Lei Lei<br>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2nd</th>
-                            <td>Samsung Research China - Beijing</td>
-                            <td>Samsung Research China, Beijing, China
-                            </td>
-                            <td>Dafeng Zhang, Xiangyu Kong, Guanqun Liu, Mengmeng Bai,<br>
-                              Jia Ouyang, Xiaobing Wang, Jiahui Yuan
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3rd</th>
-                            <td>MegFR</td>
-                            <td>Megvii Technology, China
-                            </td>
-                            <td>Xinpeng Li, Chengzhi Jiang, Ting Jiang, Wenjie Lin, QiWu,<br>
-                              Mingyan Han, Jinting Luo, Lei Yu, Haoqiang Fan, Shuaicheng Liu
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">Best Visualization Award</th>
-                            <td>Samsung Research China - Beijing</td>
-                            <td>Samsung Research China, Beijing, China
-                            </td>
-                            <td>Dafeng Zhang, Xiangyu Kong, Guanqun Liu, Mengmeng Bai,<br>
-                              Jia Ouyang, Xiaobing Wang, Jiahui Yuan
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <!-- rgb-depth-fusion -->
-                  <div class="tab-pane fade" id="rgb-depth-fusion" role="tabpanel" aria-labelledby="quad-bayer-re-mosaic-tab">
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                              <th scope="col">Rank</th>
-                              <th scope="col">Team Name</th>
-                              <th scope="col">Affiliation</th>
-                              <th scope="col">Team Members</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">1st</th>
-                            <td>MGTV</td>
-                            <td>MangoTV
-                            </td>
-                            <td>
-                              Yi Yu, Yangke Huang, Kang Zhang
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2nd</th>
-                            <td>MiMcAlgo</td>
-                            <td>Xiaomi Inc., China
-                            </td>
-                            <td>Meiya Chen, Yu Wang, Yongchao Li, Hao Jiang
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3rd</th>
-                            <td>DIntel</td>
-                            <td>Samsung R & D Institute India - Bangalore
-                            </td>
-                            <td>Amrit Kumar Muduli, Vikash Kumar, Kunal Swami, Pankaj Kumar Bajpai
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <!-- RGBW Sensor Re-mosaic -->
-                  <div class="tab-pane fade" id="rgbw-sensor-re-mosaic" role="tabpanel" aria-labelledby="rgbw-sensor-re-mosaic-tab">
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                              <th scope="col">Rank</th>
-                              <th scope="col">Team Name</th>
-                              <th scope="col">Affiliation</th>
-                              <th scope="col">Team Members</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">1st</th>
-                            <td>RUSH MI</td>
-                            <td>Dalian University of Technology, China<br>
-                               Xiaomi Inc., China<br>
-                               Chinese Academy of Sciences, China
-                            </td>
-                            <td>Yuqing Liu, Hongyuan Yu, Weichen Yu, Zhen Dong,<br>
-                              Binnan Han, Qi Jia, Xuanwu Yin, Kunlong Zuo
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2nd</th>
-                            <td>HSTT</td>
-                            <td>
-                              Harbin Institute of Technology, China<br>
-                              University of Shanghai for Science and Technology, China<br> 
-                              Tongji University, China; Tsinghua University, China<br>
-                              Shanghai AI Laboratory, China
-                            </td>
-                            <td>Yaqi Wu, Zhihao Fan, Fanqing Meng, Xun Wu,<br>
-                              Jiawei Zhang, Feng Zhang, Sijie Ren
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3rd</th>
-                            <td>MegNR</td>
-                            <td>
-                              Megvii Technology, China
-                            </td>
-                            <td>
-                              Mingyan Han, Jinting Luo, Qi Wu, Ting Jiang, Chengzhi Jiang,<br>
-                              Wenjie Lin, Xinpeng Li, Lei Yu, Haoqiang Fan, Shuaicheng Liu
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <!-- RGBW Sensor Fusion -->
-                  <div class="tab-pane fade" id="rgbw-sensor-fusion" role="tabpanel" aria-labelledby="rgbw-sensor-re-mosaic-tab">
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead>
-                          <tr>
-                              <th scope="col">Rank</th>
-                              <th scope="col">Team Name</th>
-                              <th scope="col">Affiliation</th>
-                              <th scope="col">Team Members</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <th scope="row">1st</th>
-                            <td>RUSH MI</td>
-                            <td>Xiaomi Inc., China<br> 
-                              Dalian University of Technology, China<br> 
-                              Chinese Academy of Sciences, China
-                            </td>
-                            <td>Hongyuan Yu, Yuqing Liu, Weichen Yu, Lin Ge,<br>
-                              Xiaolin Zhang, Qi Jia, Heng Zhang, Xuanwu Yin, Kunlong Zuo
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">2nd</th>
-                            <td>MegNR</td>
-                            <td>
-                              Megvii Technology, China
-                            </td>
-                            <td>Qi Wu, Wenjie Lin, Ting Jiang, Chengzhi Jiang, Mingyan Han,<br>
-                              Xinpeng Li, Jinting Luo, Lei Yu, Haoqiang Fan, Shuaicheng Liu
-                            </td>
-                          </tr>
-                          <tr>
-                            <th scope="row">3rd</th>
-                            <td>USTC-Zhalab</td>
-                            <td>
-                              University of Science and Technology of China
-                            </td>
-                            <td>
-                              Kunyu Wang, Chengzhi Cao
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <font color="#f029cf"><b>Download <a href="./award_certificates_2023.pdf" target="_blank">Certificates</a></b></font>
-
-                </div>
-              </div>
-          </div>
-      </div>
-    </section>     
-
-
-      <!-- Organizers -->
-      <section id="organizers" class="container py-5">
-        <div class="container">
-          <div class="row pt-4 pb-3">
-            <h2 class="text-center text-sm-start pb-2 pb-lg-0">Organizers</h2>
-          </div>
-          <div class="row">
-              <!-- Item -->
-              <div class="col-md-3 py-3">
-                <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                  <img src="../assets/img/organizer/chongyi_li.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                  <h5 class="fw-medium fs-lg mb-1">Chongyi Li</h5>
-                  <p class="fs-sm mb-3">Nanyang Technological University</p>
-                  <div class="d-flex justify-content-center">
-                    <a href="https://li-chongyi.github.io/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                      <i class="bx bx-home"></i>
-                    </a>
-                    <a href="https://scholar.google.com/citations?user=1_I0P-AAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bxl-google"></i>
-                    </a>
-                    <a href="mailto:chongyi.li at ntu.edu.sg" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bx-envelope"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-  
-              <!-- Item -->
-              <div class="col-md-3 py-3">
-                <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                  <img src="../assets/img/organizer/shangchen_zhou.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                  <h5 class="fw-medium fs-lg mb-1">Shangchen Zhou</h5>
-                  <p class="fs-sm mb-3">Nanyang Technological University</p>
-                  <div class="d-flex justify-content-center">
-                    <a href="https://shangchenzhou.com/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                      <i class="bx bx-home"></i>
-                    </a>
-                    <a href="https://scholar.google.com/citations?user=suaDwBQAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bxl-google"></i>
-                    </a>
-                    <a href="mailto:shangchenzhou@gmail.com" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bx-envelope"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-  
-              <!-- Item -->
-              <div class="col-md-3 py-3">
-                <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                  <img src="../assets/img/organizer/ruicheng_feng.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                  <h5 class="fw-medium fs-lg mb-1">Ruicheng Feng</h5>
-                  <p class="fs-sm mb-3">Nanyang Technological University</p>
-                  <div class="d-flex justify-content-center">
-                    <a href="https://jnjaby.github.io/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                      <i class="bx bx-home"></i>
-                    </a>
-                    <a href="https://scholar.google.com.sg/citations?user=nDrw-wwAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bxl-google"></i>
-                    </a>
-                    <a href="mailto:ruicheng002@ntu.edu.sg" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bx-envelope"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-  
-              <!-- Item -->
-              <div class="col-md-3 py-3">
-                <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                  <img src="../assets/img/organizer/yuekun_dai.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                  <h5 class="fw-medium fs-lg mb-1">Yuekun Dai</h5>
-                  <p class="fs-sm mb-3">Nanyang Technological University</p>
-                  <div class="d-flex justify-content-center">
-                    <a href="https://scholar.google.com.sg/citations?user=UyKX7ZsAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bxl-google"></i>
-                    </a>
-                    <a href="mailto:YDAI005@ntu.edu.sg" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bx-envelope"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item -->
-              <div class="col-md-3 py-3">
-                <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                  <img src="../assets/img/organizer/qingpeng_zhu.jpg" class="d-block rounded-circle mx-auto mb-3" width="162">
-                  <h5 class="fw-medium fs-lg mb-1">Qingpeng Zhu</h5>
-                  <p class="fs-sm mb-3">SenseTime/Tetras.AI</p>
-                  <div class="d-flex justify-content-center">
-                    <a href="https://scholar.google.com/citations?user=B7roEzMAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bxl-google"></i>
-                    </a>
-                    <a href="mailto:zhuqingpeng@tetras.ai" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bx-envelope"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item -->
-              <div class="col-md-3 py-3">
-                <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                  <img src="../assets/img/organizer/qianhui_sun.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                  <h5 class="fw-medium fs-lg mb-1">Qianhui Sun</h5>
-                  <p class="fs-sm mb-3">SenseBrain</p>
-                  <div class="d-flex justify-content-center">
-                    <a href="https://scholar.google.com/citations?user=4XcLFlIAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bxl-google"></i>
-                    </a>
-                    <a href="mailto:sunqianhui@sensebrain.site" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bx-envelope"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item -->
-              <div class="col-md-3 py-3">
-                <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                  <img src="../assets/img/organizer/wenxiu_sun.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                  <h5 class="fw-medium fs-lg mb-1">Wenxiu Sun</h5>
-                  <p class="fs-sm mb-3">SenseTime/Tetras.AI</p>
-                  <div class="d-flex justify-content-center">
-                    <a href="http://wenxiusun.com/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                      <i class="bx bx-home"></i>
-                    </a>
-                    <a href="https://scholar.google.com.sg/citations?hl=en&user=X9lE6O4AAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bxl-google"></i>
-                    </a>
-                    <a href="mailto:sunwenxiu@sensetime.com" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bx-envelope"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-  
-              <!-- Item -->
-              <!-- <div class="col-md-3 py-3">
-                <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                  <img src="../assets/img/organizer/qingyu_yang.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                  <h5 class="fw-medium fs-lg mb-1">Qingyu Yang</h5>
-                  <p class="fs-sm mb-3">SenseBrain</p>
-                  <div class="d-flex justify-content-center">
-                    <a href="https://scholar.google.com/citations?user=8k_A7UgAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bxl-google"></i>
-                    </a>
-                    <a href="mailto:yangqingyu@sensebrain.site" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bx-envelope"></i>
-                    </a>
-                  </div>
-                </div>
-              </div> -->
-
-              <!-- Item -->
-              <!-- <div class="col-md-3 py-3">
-                <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                  <img src="../assets/img/organizer/qingpeng_zhu.jpg" class="d-block rounded-circle mx-auto mb-3" width="162">
-                  <h5 class="fw-medium fs-lg mb-1">Qingpeng Zhu</h5>
-                  <p class="fs-sm mb-3">SenseTime/Tetras.AI</p>
-                  <div class="d-flex justify-content-center">
-                    <a href="https://scholar.google.com/citations?user=B7roEzMAAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bxl-google"></i>
-                    </a>
-                    <a href="mailto:zhuqingpeng@tetras.ai" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bx-envelope"></i>
-                    </a>
-                  </div>
-                </div>
-              </div> -->
-
-              <!-- Item -->
-              <div class="col-md-3 py-3">
-                <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                  <img src="../assets/img/organizer/cavan.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                  <h5 class="fw-medium fs-lg mb-1">Chen Change Loy</h5>
-                  <p class="fs-sm mb-3">Nanyang Technological University</p>
-                  <div class="d-flex justify-content-center">
-                    <a href="https://www.mmlab-ntu.com/person/ccloy/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                      <i class="bx bx-home"></i>
-                    </a>
-                    <a href="https://scholar.google.co.uk/citations?user=559LF80AAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bxl-google"></i>
-                    </a>
-                    <a href="mailto:ccloy@ntu.edu.sg" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bx-envelope"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Item -->
-              <div class="col-md-3 py-3">
-                <div class="card card-body card-hover bg-light border-0 text-center mx-2">
-                  <img src="../assets/img/organizer/jinwei_gu.jpg" class="d-block rounded-circle mx-auto mb-3" width="162" alt="Ralph Edwards">
-                  <h5 class="fw-medium fs-lg mb-1">Jinwei Gu</h5>
-                  <p class="fs-sm mb-3">SenseBrain</p>
-                  <div class="d-flex justify-content-center">
-                    <a href="https://www.gujinwei.org/" class="btn btn-icon btn-outline-secondary btn-facebook btn-sm me-2" target="_blank">
-                      <i class="bx bx-home"></i>
-                    </a>
-                    <a href="https://scholar.google.com/citations?user=k_T8t30AAAAJ" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bxl-google"></i>
-                    </a>
-                    <a href="mailto:gujinwei@sensebrain.ai" class="btn btn-icon btn-outline-secondary btn-linkedin btn-sm me-2" target="_blank">
-                      <i class="bx bx-envelope"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </section>
-
-    <!-- Sponsors -->
-    <!-- <style>
-      .img-container {
-        text-align: center;
-        display: block;
-      }
-    </style>
-    <section id="sponsors" class="bg-secondary py-5">
-      <div class="container">
-        <div class="row pt-4 pb-3">
-          <h2 class="text-center text-sm-start pb-2 pb-lg-0">Sponsors</h2>
-        </div>
-        <div class="row", style="justify-content:center;">          
-          <div class="col-md-3">
-            <div class="swiper-slide py-3">
-              <a href="https://www.shlab.org.cn/" class="card card-body card-hover px-2 mx-2", target="_blank">
-                <img src="../assets/img/brands/shanghai_ai_lab1.png" class="d-block mx-auto my-2" width="180" alt="Shanghai AI Lab">
-              </a>
-            </div>
-          </div>
-          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-          <div class="col-md-3">
-            <div class="swiper-slide py-3">
-              <a href="https://www.sony.net/" class="card card-body card-hover px-2 mx-2", target="_blank">
-                <img src="../assets/img/brands/sony.png" class="d-block mx-auto my-2" width="200" alt="NTU">
-              </a>
-            </div>
-          </div>
-          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-          <div class="col-md-3">
-            <div class="swiper-slide py-3">
-              <a href="https://www.ntu.edu.sg/" class="card card-body card-hover px-2 mx-2", target="_blank">
-                <img src="../assets/img/brands/ntu.png" class="d-block mx-auto my-2" width="200" alt="NTU">
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section> -->
-
-    <!-- Previous MIPI -->
-    <style>
-      .img-container {
-        text-align: center;
-        display: block;
-      }
-    </style>
-    <section id="previous" class="bg-secondary py-5">
-      <div class="container">
-        <div class="row pt-4 pb-3">
-          <h2 class="text-center text-sm-start pb-2 pb-lg-0">Previous MIPI</h2>
-        </div>
-        <div class="row", style="justify-content:center;">          
-          <div class="col-md-3">
-            <div class="swiper-slide py-3">
-              <a href="../MIPI2022/" class="card card-hover px-2 mx-2", style='text-align:center', target="_blank">
-                <img src="../assets/img/previous_mipi/mipi2022.jpg" class="d-block mx-auto my-2" width="250" alt="MIPI 2022">
-                <div>MIPI@ECCV 2022</div>
-              </a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-  </main>
-    <!-- Footer -->
-    <footer class="footer dark-mode bg-dark pt-5 pb-4 pb-lg-5">
-        <div class="container text-center pt-lg-3 opacity-90">
-        <div class="navbar-brand justify-content-center text-dark mb-2 mb-lg-4">
-          <img src="../assets/img/logo.png" class="me-2" width="60" alt="Logo">
-          <span class="fs-4">MIPI</span>
-        </div>
-        <ul class="nav justify-content-center opacity-90">
-          <li class="nav-item">
-            <a href="#tracks" class="nav-link">Tracks</a>
-          </li>
-          <li class="nav-item">
-            <a href="#submission" class="nav-link">Submission</a>
-          </li>
-          <li class="nav-item">
-            <a href="#dates" class="nav-link">Dates</a>
-          </li>
-          <li class="nav-item">
-            <a href="#schedule" class="nav-link">Schedule</a>
-          </li>
-          <li class="nav-item">
-            <a href="#speakers" class="nav-link">Speakers</a>
-          </li>
-          <li class="nav-item">
-            <a href="#awards" class="nav-link">Awards</a>
-          </li>
-          <li class="nav-item">
-            <a href="#organizers" class="nav-link">Organizers</a>
-          </li>
-          <!-- <li class="nav-item">
-            <a href="#sponsors" class="nav-link">Sponsors</a>
-          </li> -->
-          <li class="nav-item">
-            <a href="#previous" class="nav-link">Previous MIPI</a>
-          </li>
-        </ul>
-        <p class="text-center text-light pt-3 mt-lg-4 mb-0 opacity-90">
-          Workshop Location: Vancouver, Canada
-        </div>
-        <p class="text-center text-light mt-lg-4 mb-0 opacity-90">
-          Contact: 
-          <a href="mailto:mipi.challenge@gmail.com">mipi.challenge@gmail.com</a>
-        </div>
-        <p class="fs-sm text-center pt-3 mt-lg-4 mb-0 opacity-90">
-          <span class="text-light"> Copyright &copy; MIPI Challenge 2023
-        </p>
-      </div>
-    </footer>
-
-    <!-- Back to top button -->
-    <a href="#top" class="btn-scroll-top" data-scroll>
-      <span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span>
-      <i class="btn-scroll-top-icon bx bx-chevron-up"></i>
-    </a>
-
-
-    <!-- Vendor Scripts -->
-    <script src="../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-    <script src="../assets/vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="../assets/vendor/lightgallery/lightgallery.min.js"></script>
-    <script src="../assets/vendor/lightgallery/plugins/fullscreen/lg-fullscreen.min.js"></script>
-    <script src="../assets/vendor/lightgallery/plugins/zoom/lg-zoom.min.js"></script>
-    <script src="../assets/vendor/lightgallery/plugins/video/lg-video.min.js"></script>
-
-    <!-- Main Theme Script -->
-    <script src="../assets/js/theme.min.js"></script>
-    <script>
-      document.addEventListener('scroll', function(e) {
-        let currentOffset = window.scrollY + 80,
-            currentSection = "",
-            sections = ["tracks", "submission", "dates", "schedule", "speakers", "organizers", "awards", "previous"];
-
-        for (let i = 0; i < sections.length; ++ i) {
-          if (currentOffset < document.getElementById(sections[i]).offsetTop) {
-            break;
-          }
-          currentSection = sections[i];
-        }
-
-        let navbar = document.getElementsByClassName("navbar-nav")[0],
-            navLinks = navbar.getElementsByTagName("a");
-
-        for (let i = 0; i < navLinks.length; ++ i) {
-          navLinks[i].classList.remove("active");
-          if (navLinks[i].getAttribute("href") == "#" + currentSection) {
-            navLinks[i].classList.add("active");
-          }
-        }
-      })
-    </script>
-    <script type="text/javascript">
-      $('#schedule').on('click', '.abstract', function () {
-          var bibtexBlock = $('pre', $(this).parent().parent().parent()),
-              isVisible = bibtexBlock.is(':visible')
-            
-          if (isVisible) {
-              bibtexBlock.slideUp(36)
-          } else {
-              bibtexBlock.slideDown(36)
-          }
-      })
-      </script>
-
-    </body>
-</html>
+    <div class="instructor">
+	<a href="https://ayushtewari.com/">
+	    <div><img src="data/ayush.jpg"></div>
+	    <div>
+		    <p style = "margin:4px">Ayush Tewari</p>
+		    <p style = "margin:4px">MIT</p>
+	    </div>
+	</a>
+    </div>
+<!-- 
+    <div class="instructor">
+	<a href="https://www.vincentsitzmann.com/">
+	    <div><img src="data/vincent.jpeg"></div>
+	    <div>
+		    <p style = "margin:4px">Vincent Sitzmann</p>
+		    <p style = "margin:4px">MIT</p>
+	    </div>
+	</a>
+    </div> -->
+<!-- 
+    <div class="instructor">
+	<a href="https://www.cs.jhu.edu/~ayuille/">
+	    <div><img src="data/alan.jpeg"></div>
+	    <div>
+		    <p style = "margin:4px">Alan Yuille</p>
+		    <p style = "margin:4px">JHU</p>
+	    </div>
+	</a>
+    </div> -->
+	
+	
+    <div class="instructor">
+	<a href="https://people.mpi-inf.mpg.de/~theobalt/">
+	    <div><img src="data/christian.png"></div>
+	    <div>
+		    <p style = "margin:4px">Christian Theobalt</p>
+		    <p style = "margin:4px">MPI-INF</p>
+	    </div>
+	</a>
+    </div>
+
+</div>
+</div>
+	
+	
+	
+
+    <hr>
+	
+	
+</div>
+</div>
+		<br>
+		<br>
+		<br>
+		    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=500&t=n&d=46xpoU7l0x175HX9OM1n3Cbf9JxW9Yd2HmDFVmTEatk&co=78beef&ct=ffffff'></script>
+<!-- 		    <script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=46xpoU7l0x175HX9OM1n3Cbf9JxW9Yd2HmDFVmTEatk"></script> -->
+<!-- 		<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=656565&w=400&t=tt&d=pa5MCNZnvFjNm_hrbI6_4n6zYKb35I870KvtRZOaBbI&co=73c5ff'></script> -->
+<!-- 		<script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=400&t=n&d=pa5MCNZnvFjNm_hrbI6_4n6zYKb35I870KvtRZOaBbI'></script> -->
+<!-- 	    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=250&t=n&d=pa5MCNZnvFjNm_hrbI6_4n6zYKb35I870KvtRZOaBbI'></script> -->
+<!-- 	    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=a&t=n&d=pa5MCNZnvFjNm_hrbI6_4n6zYKb35I870KvtRZOaBbI'></script> -->
+<!-- 	    <script type='text/javascript' id='clustrmaps' src='//cdn.clustrmaps.com/map_v2.js?cl=ffffff&w=160&t=n&d=pa5MCNZnvFjNm_hrbI6_4n6zYKb35I870KvtRZOaBbI&co=2d78ad&cmo=3acc3a&cmn=ff5353&ct=ffffff'></script> -->
+<!-- 	    <script type="text/javascript" id="clustrmaps" src="//clustrmaps.com/map_v2.js?d=pa5MCNZnvFjNm_hrbI6_4n6zYKb35I870KvtRZOaBbI&cl=ffffff&w=a"></script> -->
+	    
+<!-- 	    	<script type="text/javascript" id="clstr_globe" src="//clustrmaps.com/globe.js?d=pa5MCNZnvFjNm_hrbI6_4n6zYKb35I870KvtRZOaBbI"></script> -->
+
+</body></html>
